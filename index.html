@@ -1,0 +1,813 @@
+<title>Grimorio de Sofi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&display=swap">
+<style>
+  :root{
+    --bg:#f3e9d2;
+    --surface:#fbf3e2;
+    --surface-2:#ecdfbf;
+    --ink:#2b2036;
+    --ink-dim:#6b5b7a;
+    --accent:#6b3fa0;
+    --accent-bright:#7d4bb8;
+    --brass:#9c7a2e;
+    --rose:#a83f60;
+    --line: rgba(43,32,54,0.18);
+    --shadow: 0 18px 40px -20px rgba(43,32,54,0.35);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1a1424;
+      --surface:#241b32;
+      --surface-2:#2f2340;
+      --ink:#f1e6d2;
+      --ink-dim:#bdadcd;
+      --accent:#b78fe0;
+      --accent-bright:#cba8ee;
+      --brass:#d4af5a;
+      --rose:#e08aa4;
+      --line: rgba(183,143,224,0.25);
+      --shadow: 0 24px 50px -18px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1a1424;
+    --surface:#241b32;
+    --surface-2:#2f2340;
+    --ink:#f1e6d2;
+    --ink-dim:#bdadcd;
+    --accent:#b78fe0;
+    --accent-bright:#cba8ee;
+    --brass:#d4af5a;
+    --rose:#e08aa4;
+    --line: rgba(183,143,224,0.25);
+    --shadow: 0 24px 50px -18px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Lora', Georgia, serif;
+    font-size:18px;
+    line-height:1.65;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image: radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 45%),
+                       radial-gradient(circle at 85% 92%, color-mix(in srgb, var(--brass) 10%, transparent), transparent 45%);
+  }
+  h1,h2,h3,.eyebrow,.spell-name,.wand-label,.cat-label{font-family:'Cinzel Decorative', 'Cinzel', serif;}
+  h1,h2,h3{text-wrap:balance; margin:0; font-weight:700;}
+
+  .page{
+    position:relative;
+    z-index:1;
+    max-width:740px;
+    margin:0 auto;
+    padding:52px 22px 76px;
+    display:flex;
+    flex-direction:column;
+    gap:48px;
+  }
+
+  .divider{display:flex; align-items:center; gap:10px; margin:0;}
+  .divider::before,.divider::after{content:""; flex:1 1 auto; height:1px; background:var(--line);}
+  .divider .diamond{width:6px;height:6px;background:var(--brass);opacity:.8;transform:rotate(45deg); flex:0 0 auto;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    animation: fade-in .7s ease-out both;
+  }
+  .dedication{
+    font-family:'Caveat', cursive;
+    font-size:22px;
+    color:var(--accent);
+    margin:0;
+  }
+  h1{font-size:clamp(32px,7vw,50px); color:var(--ink); letter-spacing:.01em;}
+
+  /* ---------- cast stage ---------- */
+  .cast-stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+  }
+  .mood-head{text-align:center;}
+  .mood-head h3{font-size:18px;}
+  .mood-picker{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    max-width:560px;
+  }
+  .mood-chip{
+    all:unset;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-dim);
+    font-family:'Cinzel Decorative', serif;
+    font-size:10.5px;
+    letter-spacing:.03em;
+  }
+  .mood-chip:hover{border-color:var(--accent);}
+  .mood-chip.active{background:var(--accent); border-color:var(--accent); color:var(--surface);}
+  .mood-chip-icon{width:15px; height:15px; flex:0 0 auto; color:currentColor;}
+
+  .wand-wrap{position:relative;}
+  .wand-wrap::before{
+    content:"";
+    position:absolute;
+    inset:-16px;
+    border-radius:999px;
+    background:radial-gradient(circle, color-mix(in srgb, var(--brass) 45%, transparent), transparent 72%);
+    opacity:0;
+    animation: glow-pulse 3.4s ease-in-out infinite;
+    z-index:-1;
+  }
+  .wand-btn{
+    all:unset;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 30px;
+    border-radius:999px;
+    background:var(--accent);
+    color:var(--surface);
+    box-shadow:var(--shadow);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .wand-btn:hover{background:var(--accent-bright); transform:translateY(-1px) scale(1.02);}
+  .wand-btn:active{transform:translateY(0) scale(.98);}
+  .wand-btn:focus-visible{outline:2px solid var(--brass); outline-offset:3px;}
+  .wand-icon{width:26px; height:26px; flex:0 0 auto; color:var(--brass);}
+  .wand-label{font-size:13px; letter-spacing:.08em; text-transform:uppercase;}
+
+  .cast-hint{color:var(--ink-dim); font-style:italic; font-size:14.5px; text-align:center; min-height:20px; margin:0;}
+
+  /* ---------- spell card ---------- */
+  .spell-card{
+    position:relative;
+    width:100%;
+    max-width:520px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:30px clamp(22px,6vw,40px);
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    text-align:center;
+    animation: card-in .5s cubic-bezier(.2,.8,.3,1) both;
+  }
+  .spell-card::after{
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    pointer-events:none;
+  }
+  .spell-cat{
+    font-family:'Cinzel Decorative', serif;
+    font-size:10.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+  .spell-name{font-size:25px; color:var(--ink);}
+  .spell-incantation{
+    font-family:'Caveat', cursive;
+    font-size:28px;
+    color:var(--accent);
+    margin:2px 0;
+  }
+  .spell-icon{width:44px; height:44px; margin:0 auto; color:var(--brass);}
+  .spell-effect{margin:0; font-size:16.5px; color:var(--ink); text-align:left;}
+  .spell-meta{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    text-align:left;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+  }
+  .spell-meta div{display:flex; gap:8px; flex-wrap:wrap; align-items:baseline;}
+  .spell-meta dt{font-family:'Cinzel Decorative', serif; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); flex:0 0 auto; margin:0;}
+  .spell-meta dd{margin:0; font-size:14.5px; color:var(--ink-dim); flex:1 1 180px;}
+
+  .gesture-practice{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-align:left;
+    background:var(--surface-2);
+    border:1px dashed var(--line);
+    border-radius:14px;
+    padding:12px 16px;
+  }
+  .gesture-icon{width:56px; height:56px; flex:0 0 auto; color:var(--rose);}
+  .gesture-icon .pulse-ring{transform-origin:20px 20px; animation:ring-pulse 1.6s ease-out infinite;}
+  .gesture-caption{margin:0; font-family:'Cinzel Decorative', serif; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--brass);}
+  .gesture-desc{margin:2px 0 0; font-size:14.5px; color:var(--ink-dim);}
+
+  .entry-gesto{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--surface-2);
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:6px 10px;
+    margin:2px 0;
+  }
+  .entry-gesto .gesture-icon{width:38px; height:38px;}
+  .entry-gesto p{margin:0;}
+
+  .sparkle{
+    position:absolute;
+    width:10px; height:10px;
+    color:var(--brass);
+    opacity:0;
+    animation: sparkle-pop .9s ease-out both;
+    pointer-events:none;
+  }
+
+  /* ---------- grimoire index ---------- */
+  .index-head{text-align:center; display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .index-head h3{font-size:22px;}
+  .index-head p{margin:0; color:var(--ink-dim); font-size:15px;}
+  .index-list{margin-top:22px; display:flex; flex-direction:column; gap:26px;}
+  .index-cat-head{display:flex; align-items:center; gap:10px;}
+  .index-cat-icon{width:22px; height:22px; color:var(--brass); flex:0 0 auto;}
+  .index-cat-head h4{font-size:16px; letter-spacing:.02em;}
+  .index-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;}
+  .spell-entry{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .spell-entry summary{
+    list-style:none;
+    cursor:pointer;
+    padding:12px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  .spell-entry summary::-webkit-details-marker{display:none;}
+  .entry-name{font-family:'Cinzel Decorative', serif; font-size:13.5px; color:var(--ink);}
+  .entry-incantation{font-family:'Caveat', cursive; font-size:16px; color:var(--accent);}
+  .entry-body{padding:0 14px 14px; display:flex; flex-direction:column; gap:8px;}
+  .entry-body p{margin:0; font-size:14px; color:var(--ink-dim);}
+  .entry-body strong{font-family:'Cinzel Decorative', serif; font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--brass); display:block; margin-bottom:2px;}
+
+  /* ---------- signature ---------- */
+  .signature{
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:15px;
+  }
+  .signature .sign-off{font-family:'Caveat', cursive; font-size:26px; color:var(--accent); display:block; margin-top:6px;}
+
+  [hidden]{display:none !important;}
+
+  @keyframes fade-in{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes glow-pulse{ 0%,100%{opacity:0;} 50%{opacity:1;} }
+  @keyframes card-in{ from{opacity:0; transform:translateY(10px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);} }
+  @keyframes sparkle-pop{
+    0%{opacity:0; transform:scale(.2) rotate(0deg);}
+    35%{opacity:1;}
+    100%{opacity:0; transform:scale(1.3) rotate(50deg) translateY(-14px);}
+  }
+  @keyframes ring-pulse{
+    0%{transform:scale(.85); opacity:.9;}
+    100%{transform:scale(1.35); opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <p class="dedication">Para mi princesa, Sofi</p>
+    <h1>Grimorio de Sofi</h1>
+  </header>
+
+  <section class="cast-stage">
+    <div class="mood-head">
+      <h3>¿Cómo te sientes hoy?</h3>
+    </div>
+    <div class="mood-picker" id="moodPicker"></div>
+    <div class="wand-wrap">
+      <button class="wand-btn" id="wandBtn" type="button">
+        <svg class="wand-icon" viewBox="0 0 40 40" aria-hidden="true" id="wandIcon"></svg>
+        <span class="wand-label">Agita la varita</span>
+      </button>
+    </div>
+    <p class="cast-hint" id="castHint">Elige cómo te sientes (o no elijas nada) y agita la varita.</p>
+    <div class="spell-card" id="spellCard" hidden></div>
+  </section>
+
+  <div class="divider"><span class="diamond"></span></div>
+
+  <section class="grimoire-index">
+    <div class="index-head">
+      <h3>El grimorio completo</h3>
+      <p>Todos los hechizos, por si quieres leerlos todos de una sola vez.</p>
+    </div>
+    <div class="index-list" id="indexList"></div>
+  </section>
+
+  <footer class="signature">
+    <p>Hecho con mucha magia (y cero varitas reales) para la sobrina más increíble que conozco.</p>
+    <span class="sign-off">— Tía Raffy y Tío Luis 🪄</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- tiny shape helpers (viewBox 0 0 40 40) ---------------- */
+
+  function seg(x1,y1,x2,y2){
+    return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>';
+  }
+  function dot(cx,cy,r,filled){
+    return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" style="'+(filled?'fill:currentColor;stroke:none;':'fill:none;stroke:currentColor;stroke-width:2;')+'"/>';
+  }
+  function tri(points,filled){
+    return '<polygon points="'+points+'" style="'+(filled?'fill:currentColor;stroke:none;':'fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;')+'"/>';
+  }
+  function box(x,y,w,h,filled){
+    return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" style="'+(filled?'fill:currentColor;stroke:none;':'fill:none;stroke:currentColor;stroke-width:2;')+'"/>';
+  }
+  function curve(d,filled){
+    return '<path d="'+d+'" style="'+(filled?'fill:currentColor;stroke:none;':'fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;')+'"/>';
+  }
+  function starPoly(cx,cy,rOuter,rInner,points){
+    const pts=[]; const total=points*2;
+    for(let i=0;i<total;i++){
+      const r=(i%2===0)?rOuter:rInner;
+      const a=(Math.PI*2*i/total) - Math.PI/2;
+      pts.push((cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1));
+    }
+    return tri(pts.join(" "), false);
+  }
+  const CRESCENT = curve("M24,10 A9,9 0 1,0 24,28 A6.5,6.5 0 1,1 24,10 Z", true);
+
+  /* ---------------- icon set ---------------- */
+
+  const WAND_ICON = seg(9,31,29,11)+starPoly(32,8,4.5,2,4)+dot(15,27,1.4,true)+dot(19,23,1.4,true);
+
+  const ICONS = {
+    valor: curve("M20,6 L32,11 L32,20 Q32,30 20,34 Q8,30 8,20 L8,11 Z")+seg(20,13,20,27),
+    reir: curve("M10,18 Q20,29 30,18")+dot(14,14,1.8,true)+dot(26,14,1.8,true),
+    dias_grises: dot(14,22,7,false)+dot(23,17,9,false)+dot(30,22,6,false)+seg(9,27,33,27),
+    examen: box(9,9,22,23,false)+seg(20,9,20,32)+tri("24,9 29,9 26.5,15",true),
+    extranar: dot(15,14,5,false)+dot(25,14,5,false)+tri("9,17 31,17 20,32",false)+seg(13,36,17,36)+seg(23,36,27,36),
+    dormir: CRESCENT+starPoly(13,13,4,2,4),
+    enojada: curve("M7,13 Q13,9 19,13 Q25,17 31,13")+curve("M7,20 Q13,16 19,20 Q25,24 31,20")+curve("M7,27 Q13,23 19,27 Q25,31 31,27"),
+    celebrar: dot(13,11,2,true)+dot(27,10,2,true)+box(17,19,3,3,true)+dot(31,20,1.7,true)+box(9,20,3,3,true)+dot(22,30,2,true)+dot(13,28,1.7,true),
+    naturaleza: dot(20,13,4,false)+dot(13,18,3,false)+dot(27,18,3,false)+dot(16,23,3,false)+dot(24,23,3,false)+seg(20,26,20,34)
+  };
+
+  document.getElementById("wandIcon").innerHTML = WAND_ICON;
+
+  /* ---------------- wand-movement diagrams ---------------- */
+
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function trail(path, dur){
+    if(reduceMotion) return "";
+    return '<circle r="2.2" style="fill:currentColor;stroke:none;"><animateMotion dur="'+dur+'s" repeatCount="indefinite" path="'+path+'"/></circle>';
+  }
+  function gline(path){
+    return '<path d="'+path+'" style="fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"/>';
+  }
+  function ghead(points){
+    return '<polygon points="'+points+'" style="fill:currentColor;stroke:none;"/>';
+  }
+  function gring(r,w){
+    return '<circle cx="20" cy="20" r="'+r+'" style="fill:none;stroke:currentColor;stroke-width:'+(w||3)+';"/>';
+  }
+  function gdot(r){
+    return '<circle cx="20" cy="20" r="'+r+'" style="fill:currentColor;stroke:none;"/>';
+  }
+
+  const GESTURE_ICONS = {
+    /* every spell gets its own distinct icon — no two spells share one */
+    up: gline("M20,34 L20,8")+ghead("20,3 13,14 27,14")+trail("M20,34 L20,8",1.6),
+    down: gline("M20,6 L20,32")+ghead("20,37 13,26 27,26")+trail("M20,6 L20,32",1.6),
+    push: gline("M5,20 L27,20")+ghead("36,20 24,13 24,27")+trail("M5,20 L27,20",1.6),
+    circle: gring(12)+trail("M20,8 A12,12 0 1,1 19.99,8 Z",2.2),
+    smallcircle: gring(7)+trail("M20,13 A7,7 0 1,1 19.99,13 Z",1.8),
+    zigzag: gline("M5,11 L15,29 L24,11 L35,29")+trail("M5,11 L15,29 L24,11 L35,29",2.4),
+    tap: gdot(4.5)+'<circle cx="20" cy="20" r="12" class="pulse-ring" style="fill:none;stroke:currentColor;stroke-width:2.75;"/>',
+    hold: gdot(5)+gring(9,3)+'<circle cx="20" cy="20" r="14" class="pulse-ring" style="fill:none;stroke:currentColor;stroke-width:2.75;"/>',
+    cross: gline("M9,9 L31,31")+gline("M31,9 L9,31"),
+    blow: gline("M6,18 Q20,4 34,18")+gline("M6,25 Q20,13 34,25")+gdot(2.4),
+    fist: '<rect x="10" y="10" width="20" height="20" rx="6" style="fill:currentColor;stroke:none;"/>',
+    none: gline("M11,20 L17,27 L30,12"),
+    sweep: gline("M6,25 Q20,34 34,25")
+      + '<circle cx="12" cy="13" r="1.8" style="fill:currentColor;stroke:none;"/>'
+      + '<circle cx="20" cy="9" r="1.8" style="fill:currentColor;stroke:none;"/>'
+      + '<circle cx="28" cy="13" r="1.8" style="fill:currentColor;stroke:none;"/>'
+      + trail("M6,25 Q20,34 34,25",2),
+    /* golpe seco: chop corto + marcas de impacto */
+    chop: gline("M20,10 L20,24")
+      + '<polygon points="20,30 14,24 26,24" style="fill:currentColor;stroke:none;"/>'
+      + '<line x1="12" y1="30" x2="16" y2="27" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>'
+      + '<line x1="28" y1="30" x2="24" y2="27" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>'
+      + trail("M20,10 L20,24",1.2),
+    /* línea corta con estrellitas, para lo "estrellado" */
+    starline: gline("M9,22 L31,22")
+      + starPoly(13,12,3,1.2,4)
+      + starPoly(27,12,3,1.2,4)
+      + trail("M9,22 L31,22",1.6),
+    /* barrera frente a la puerta */
+    barrier: '<rect x="12" y="7" width="16" height="26" rx="2" style="fill:none;stroke:currentColor;stroke-width:2.5;"/>'
+      + gline("M8,20 L32,20")
+      + trail("M8,20 L32,20",1.4),
+    /* movimiento rápido hacia arriba + estallido de confeti */
+    burstup: gline("M20,30 L20,14")
+      + ghead("20,7 14,17 26,17")
+      + '<line x1="11" y1="10" x2="9" y2="6" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>'
+      + '<line x1="29" y1="10" x2="31" y2="6" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>'
+      + '<circle cx="20" cy="6" r="1.6" style="fill:currentColor;stroke:none;"/>'
+      + trail("M20,30 L20,14",1.2),
+    /* toque firme, sin animación: quieto y constatado */
+    press: gdot(5)+gring(10,3),
+    /* apuntar la varita a una luna creciente */
+    moonpoint: gline("M14,32 L26,10")
+      + curve("M30,4 A5,5 0 1,0 30,14 A3.6,3.6 0 1,1 30,4 Z", true)
+      + trail("M14,32 L26,10",1.6),
+    /* raíces que bajan desde el suelo */
+    root: gline("M20,6 L20,20")
+      + '<line x1="9" y1="20" x2="31" y2="20" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>'
+      + gline("M20,20 L12,32")
+      + gline("M20,20 L28,32")
+      + gline("M20,20 L20,34"),
+    /* piedra guardada dentro de un bolsillo */
+    pocket: '<path d="M10,14 Q10,8 20,8 Q30,8 30,14 L30,30 Q30,34 20,34 Q10,34 10,30 Z" style="fill:none;stroke:currentColor;stroke-width:2.5;"/>'
+      + gdot(4),
+    /* varita como espejo frente a la cara */
+    mirror: '<rect x="10" y="6" width="20" height="28" rx="9" style="fill:none;stroke:currentColor;stroke-width:2.5;"/>'
+      + '<ellipse cx="16" cy="14" rx="2.5" ry="4.5" style="fill:currentColor;stroke:none;opacity:.55;"/>',
+    /* sonrisa gigante con ojitos */
+    grin: curve("M9,22 Q20,32 31,22", false)+dot(14,14,2,true)+dot(26,14,2,true),
+    /* esquinas de captura de pantalla */
+    snapshot: '<path d="M9,15 L9,9 L15,9" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"/>'
+      + '<path d="M31,15 L31,9 L25,9" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"/>'
+      + '<path d="M9,25 L9,31 L15,31" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"/>'
+      + '<path d="M31,25 L31,31 L25,31" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"/>'
+      + gdot(3),
+    /* vaso con un remolino, como revolviendo un batido */
+    stir: '<path d="M13,12 L15,30 Q15,34 20,34 Q25,34 25,30 L27,12" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"/>'
+      + '<path d="M16,18 Q20,14 24,18 Q20,22 16,18" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"/>',
+    /* nube-almohada esponjosa */
+    cushion: curve("M8,24 Q8,16 16,16 Q18,10 24,12 Q32,12 32,20 Q34,26 26,27 Q20,32 12,28 Q6,28 8,24 Z", true),
+    /* espalda derecha, hombros hacia atrás */
+    posture: gline("M20,8 L20,32")
+      + '<line x1="12" y1="14" x2="20" y2="10" style="stroke:currentColor;stroke-width:2.5;stroke-linecap:round;"/>'
+      + '<line x1="28" y1="14" x2="20" y2="10" style="stroke:currentColor;stroke-width:2.5;stroke-linecap:round;"/>',
+    /* calendario con una fecha marcada */
+    calendar: '<rect x="8" y="10" width="24" height="20" rx="2" style="fill:none;stroke:currentColor;stroke-width:2.5;"/>'
+      + '<line x1="8" y1="16" x2="32" y2="16" style="stroke:currentColor;stroke-width:2;"/>'
+      + gring(4,2.2),
+    /* tres pasos en fila, como una rutina */
+    sequence: '<circle cx="10" cy="22" r="3" style="fill:currentColor;stroke:none;"/>'
+      + '<circle cx="20" cy="22" r="3" style="fill:currentColor;stroke:none;opacity:.65;"/>'
+      + '<circle cx="30" cy="22" r="3" style="fill:currentColor;stroke:none;opacity:.35;"/>'
+      + gline("M10,22 L30,22"),
+    /* ovejita redondita con patitas */
+    sheep: curve("M10,20 Q8,14 16,14 Q18,10 24,12 Q30,10 30,16 Q34,18 30,22 Q30,26 22,25 Q14,27 10,20 Z", true)
+      + '<line x1="14" y1="27" x2="14" y2="32" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>'
+      + '<line x1="24" y1="27" x2="24" y2="32" style="stroke:currentColor;stroke-width:2;stroke-linecap:round;"/>',
+    /* gotas de agua salpicando */
+    splash: gdot(2.5)
+      + '<circle cx="12" cy="14" r="2" style="fill:currentColor;stroke:none;"/>'
+      + '<circle cx="28" cy="14" r="2" style="fill:currentColor;stroke:none;"/>'
+      + '<circle cx="20" cy="9" r="2" style="fill:currentColor;stroke:none;"/>'
+      + '<path d="M20,20 Q20,30 20,34" style="fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;"/>',
+    /* espiral de baile */
+    twirl: '<path d="M20,20 m-3,0 a3,3 0 1,1 6,0 a6,6 0 1,1 -12,0 a9,9 0 1,1 18,0" style="fill:none;stroke:currentColor;stroke-width:2.75;stroke-linecap:round;"/>',
+    /* puerta abierta con flecha hacia afuera */
+    dooropen: '<rect x="8" y="7" width="14" height="26" rx="1.5" style="fill:none;stroke:currentColor;stroke-width:2.5;"/>'
+      + gline("M24,20 L33,20")
+      + ghead("38,20 32,15 32,25")
+      + trail("M24,20 L33,20",1.4)
+  };
+
+  /* ---------------- content: categories & spells ---------------- */
+  /* Todo original, inventado para Sofi — nada de esto es de ningún libro. */
+
+  const CATEGORIES = [
+    {id:"valor", name:"Para cuando hace falta valor", chip:"Valor"},
+    {id:"reir", name:"Para hacer reír a alguien en contra de su voluntad", chip:"Hacer reír"},
+    {id:"dias_grises", name:"Para los días que empezaron mal", chip:"Días grises"},
+    {id:"examen", name:"Para antes de un examen (o algo que dé nervios)", chip:"Nervios"},
+    {id:"extranar", name:"Para cuando extrañas a alguien", chip:"Extrañar"},
+    {id:"dormir", name:"Para dormir sin pensar en nada raro", chip:"Dormir"},
+    {id:"enojada", name:"Para cuando estás que explotas", chip:"Enojo"},
+    {id:"celebrar", name:"Para cuando algo te sale bien", chip:"Celebrar"},
+    {id:"naturaleza", name:"Para cuando necesitas estar afuera un rato", chip:"Naturaleza"}
+  ];
+
+  const SPELLS = [
+    {cat:"valor", name:"Pantalones Largos-um", incant:"Pantalones largos. A la cintura. Ya.",
+      effect:"No borra el miedo, pero hace que dejes de escucharlo tanto. Suficiente para dar el primer paso.",
+      ing:"Tres respiraciones y la prueba de que ya lo lograste antes.",
+      gest:"Una línea recta hacia arriba, como si te pararas un centímetro más alta.", gpath:"up",
+      dare:"Dile un cumplido random a alguien hoy, sin razón aparente. Ese también es un acto de valor."},
+    {cat:"valor", name:"Rebotacomentarios-o", incant:"Lo que digas, rebota.",
+      effect:"Un filtro invisible que deja pasar lo que sirve y descarta el resto. No es magia real, pero actúa como si lo fuera.",
+      ing:"Decidir que hoy no te vas a achicar.",
+      gest:"Un círculo alrededor tuyo, sin prisa.", gpath:"circle",
+      dare:"La próxima vez que alguien te intente bajonear, sonríe como si no te hubiera afectado. Aunque sí."},
+    {cat:"valor", name:"Pócima de Agallas Instantáneas", incant:"Agallas, al toque. Sin excusas.",
+      effect:"Un ritual exprés de tres pasos para cuando hace falta valor ya mismo y no hay tiempo para pensarlo de más.",
+      ing:"Reúne: un vaso de agua bien fría, tu canción favorita a todo volumen, y tres segundos mirándote al espejo.",
+      gest:"Sostener la varita como espejo frente a tu cara, un segundo, sin bajar la mirada.", gpath:"mirror",
+      dare:"Antes de algo que te dé nervios, mírate al espejo tres segundos y dite algo lindo. En voz alta."},
+
+    {cat:"reir", name:"Cosquillamiento Nuclear", incant:"Cosquillas... ¡ya!",
+      effect:"Hace reír a la persona más seria del lugar en menos de diez segundos. Funciona mejor si no te importa hacer el ridículo un poco.",
+      ing:"Una cara absurda y cero vergüenza.",
+      gest:"Zigzag rápido con la varita, como firmando algo importante pero mal.", gpath:"zigzag",
+      dare:"Encuentra a la persona más seria de la casa hoy y hazla reír. Cuenta como misión cumplida."},
+    {cat:"reir", name:"Chistorrazo Legendario", incant:"Prepárate. Esto es malo.",
+      effect:"Convierte un chiste malísimo en algo gracioso, solo por lo malo que es. Funciona más de lo que debería.",
+      ing:"Un chiste que ya sabes que es malo y lo cuentas de todas formas.",
+      gest:"Un golpe seco con la varita, cerrando el chiste.", gpath:"chop",
+      dare:"Guarda este chiste para cuando alguien esté de mal humor. Es un arma secreta, úsala con cuidado."},
+    {cat:"reir", name:"Pócima Ja-Ja-Já", incant:"Ja. Ja. Ja. Ahora en serio.",
+      effect:"Arranca una risa en cadena con quien esté cerca, aunque no tenga ni idea de por qué se está riendo.",
+      ing:"Reúne: una cara rarísima, un sonido random, y que no te importe verte ridícula por diez segundos.",
+      gest:"Un círculo grande y rápido cerca de la cara, como dibujando una sonrisa gigante.", gpath:"grin",
+      dare:"Haz la cara más rara que sepas hacer, sin avisar, y cuenta cuántas personas se ríen contigo."},
+    {cat:"reir", name:"Meme Eterno-um", incant:"Esto es meme para siempre.",
+      effect:"Convierte un momento vergonzoso en un chiste interno en vez de algo de qué avergonzarse.",
+      ing:"El momento vergonzoso en cuestión, y alguien de confianza para contárselo.",
+      gest:"Un clic rápido en el aire con la varita, como guardando una captura.", gpath:"snapshot",
+      dare:"Cuenta el momento vergonzoso como si fuera un cuento gracioso. Gana quien se ría más fuerte."},
+
+    {cat:"dias_grises", name:"Nubarronus Fuera-o", incant:"Nubarrón, tómate el día libre.",
+      effect:"No arregla el día. Pero le baja el peso, como si alguien más lo cargara un rato contigo.",
+      ing:"Una manta, algo rico, y no tener que hablar de eso todavía.",
+      gest:"Empujar la varita hacia adelante, apartando algo invisible.", gpath:"push",
+      dare:"Si el día viene mal, cambia algo chiquito — la ropa, la música, el peinado. A veces alcanza."},
+    {cat:"dias_grises", name:"Rayito de Sol de Bolsillo", incant:"Algo bueno hubo. Encuéntralo.",
+      effect:"Busca lo único decente que pasó en un día horrible y lo hace un poco más grande de lo que es.",
+      ing:"Estar dispuesta a buscarlo, aunque no tengas ganas.",
+      gest:"Trazar un círculo pequeño con la punta de la varita.", gpath:"smallcircle",
+      dare:"Anota en algún lado la cosa buena que encontraste hoy. Léela la próxima vez que lo necesites."},
+    {cat:"dias_grises", name:"Batido Anti-Bajón", incant:"Arriba el ánimo. Ya.",
+      effect:"Un mini ritual de tres ingredientes para resetear un día pesado usando los sentidos en vez de pensar de más.",
+      ing:"Reúne: tu snack favorito, la canción que te hace bailar sola, y cinco minutos de no pensar en nada importante.",
+      gest:"Revolver la varita en círculos, como mezclando algo en un vaso.", gpath:"stir",
+      dare:"Baila una canción entera en tu cuarto. Mal, bien, como sea. Cuenta como magia."},
+    {cat:"dias_grises", name:"Colchón de Nubes-um", incant:"Que amortigüe. Que no duela tanto.",
+      effect:"Un permiso oficial para tener un aterrizaje suave en un día difícil, en vez de aguantar todo de una.",
+      ing:"Una manta, algo calentito para tomar, y permiso para no hacer nada productivo por una hora.",
+      gest:"Dibujar una nube suave y esponjosa en el aire con la varita.", gpath:"cushion",
+      dare:"Date una hora de no-hacer-nada, sin culpa, cuando el día venga pesado."},
+
+    {cat:"examen", name:"Memoria Turbo-cohete", incant:"Memoria, despega.",
+      effect:"No mete nada nuevo en tu cabeza — eso ya lo hiciste estudiando. Solo ayuda a que salga cuando lo necesitas.",
+      ing:"Haber dormido más de seis horas. Sin esto, el hechizo no sirve de mucho.",
+      gest:"Un toque suave en la sien, nada dramático.", gpath:"tap",
+      dare:"Explícale a alguien (o a tu peluche) lo que estudiaste, en voz alta. Suena raro pero funciona."},
+    {cat:"examen", name:"Manos de Piedra-um", incant:"La mano firme, la mente clara.",
+      effect:"Corta el tembloreo de nervios de los primeros minutos, cuando todavía no sabes por dónde empezar.",
+      ing:"Tres respiraciones lentas antes de abrir la hoja.",
+      gest:"Sostener la varita quieta contra el pecho, un segundo, sin más.", gpath:"hold",
+      dare:"Antes de entrar, cuenta hasta diez despacio. Nadie tiene que saber que lo hiciste."},
+    {cat:"examen", name:"Pócima Cero Pánico", incant:"Pánico, quedas cancelado.",
+      effect:"Un ritual de último momento contra la espiral de nervios justo antes de entrar.",
+      ing:"Reúne: tres respiraciones profundas, los hombros bien hacia atrás, y repetirte 'ya estudié lo que pude'.",
+      gest:"Enderezar la varita como enderezando los hombros, de golpe.", gpath:"posture",
+      dare:"Dilo en voz baja antes de entrar: 'ya estudié lo que pude'. Es la verdad, aunque no se sienta así."},
+
+    {cat:"extranar", name:"Abrazo Teletransportado-o", incant:"Abrazo, viaja rápido.",
+      effect:"No trae a nadie de vuelta antes de tiempo. Pero hace que la distancia pese un poco menos mientras tanto.",
+      ing:"Una foto, un audio viejo, o cerrar los ojos y recordar bien una voz.",
+      gest:"Cruzar los brazos, como sosteniéndote a ti misma un momento.", gpath:"cross",
+      dare:"Mándale un mensaje random a esa persona. No hace falta que sea profundo, solo que llegue."},
+    {cat:"extranar", name:"Mensaje Exprés del Viento", incant:"Que le llegue, aunque no sepa cómo.",
+      effect:"Un pensamiento bien pensado, mandado sin necesidad de decirlo en voz alta.",
+      ing:"Pensarlo de verdad, no de pasada.",
+      gest:"Un soplo corto sobre la punta de la varita.", gpath:"blow",
+      dare:"Piensa el mensaje bien claro, como si fueras a decirlo en voz alta. Aunque no lo digas."},
+    {cat:"extranar", name:"Cuenta Regresiva del Reencuentro", incant:"Falta menos. Siempre falta menos.",
+      effect:"Convierte extrañar a alguien en una cuenta regresiva concreta, en vez de una espera sin final a la vista.",
+      ing:"Un calendario, una fecha (aunque sea aproximada), y ganas de tacharla cuando llegue.",
+      gest:"Dibujar un cuadrado en el aire y marcar un punto adentro, como circulando una fecha.", gpath:"calendar",
+      dare:"Anota en algún lado cuándo creés que la vas a volver a ver. Tachá los días si eso ayuda."},
+
+    {cat:"dormir", name:"Modo Avión Cerebral", incant:"Cerebro, modo avión.",
+      effect:"Frena lo que dio vueltas todo el día para que no siga dando vueltas también de noche.",
+      ing:"Luz apagada, o casi.",
+      gest:"Una línea corta y firme en el aire, sobre la almohada.", gpath:"starline",
+      dare:"Si algo te sigue dando vueltas, escríbelo en un papel y cierra el cuaderno. Mañana lo ves."},
+    {cat:"dormir", name:"Pesadillas, Boletos Agotados", incant:"Pesadillas: entrada denegada.",
+      effect:"Cierra la puerta a los sueños feos. Sin excepciones, sin negociar.",
+      ing:"Lo que sea que abraces para dormir. Nadie te va a juzgar por eso.",
+      gest:"Una línea firme frente a la puerta del cuarto.", gpath:"barrier",
+      dare:"Deja una luz prendida si hace falta. No es cosa de bebés, es estrategia."},
+    {cat:"dormir", name:"Fórmula Secreta del Sueño", incant:"Fórmula activada. A dormir.",
+      effect:"Una mini receta nocturna de tres pasos que le avisa al cerebro que ya es hora de apagarse.",
+      ing:"Reúne: luz bajita, tres respiraciones lentas, y el peluche o almohada de siempre.",
+      gest:"Trazar tres puntitos en el aire, uno después del otro, como marcando pasos.", gpath:"sequence",
+      dare:"Haz exactamente lo mismo cada noche, en el mismo orden. El cerebro aprende el patrón y se relaja solo."},
+    {cat:"dormir", name:"Cuenta Ovejas Turbo-um", incant:"Ovejas, formen fila. Rápido.",
+      effect:"Una versión mejorada de contar ovejas: al revés es más aburrido, y por eso funciona mejor.",
+      ing:"Cien ovejas imaginarias y paciencia para contarlas al revés.",
+      gest:"Dibujar una ovejita redondita en el aire con la varita.", gpath:"sheep",
+      dare:"En vez de contar de adelante para atrás, cuenta ovejas de 100 para abajo. Te aburres antes de llegar a cero."},
+
+    {cat:"enojada", name:"Freno de Mano Emocional", incant:"Freno. Ahora.",
+      effect:"No apaga el enojo — nada lo apaga del todo. Pero baja el volumen lo suficiente para pensar antes de actuar.",
+      ing:"Un rato a solas, aunque sean cinco minutos y una puerta cerrada.",
+      gest:"Bajar la varita despacio, de arriba hacia abajo.", gpath:"down",
+      dare:"Cuenta hasta diez antes de responder. Los diez segundos son innegociables, incluso enojada."},
+    {cat:"enojada", name:"Filtro Anti-Metida-de-Pata", incant:"Piensa antes. Habla después.",
+      effect:"Un segundo de pausa entre lo que sientes y lo que dices, para que salga lo que en verdad quieres decir.",
+      ing:"No querer arrepentirte de esto en media hora.",
+      gest:"Cerrar el puño alrededor de la varita, un instante, antes de hablar.", gpath:"fist",
+      dare:"Si dudas entre decirlo o no decirlo, probablemente sea mejor no decirlo. Todavía."},
+    {cat:"enojada", name:"Extintor de Berrinches", incant:"Fuego apagado. Sin drama.",
+      effect:"Un ritual de enfriamiento rápido para cuando el enojo sube demasiado rápido y hay que bajarlo ya.",
+      ing:"Reúne: agua fría en la cara o las manos, salir del cuarto un minuto, y no decir la primera frase que se te ocurra.",
+      gest:"Sacudir la varita hacia arriba, como salpicando gotas.", gpath:"splash",
+      dare:"Sal del cuarto un minuto antes de responder. El enojo baja solo, aunque no lo creas."},
+
+    {cat:"celebrar", name:"Confetti-plosión-um", incant:"¡Lo hice! Que se note.",
+      effect:"Marca que algo salió bien, por más chico que sea, en vez de dejarlo pasar sin más.",
+      ing:"No restarle importancia a lo que sí lograste.",
+      gest:"Un movimiento rápido hacia arriba, como levantando algo.", gpath:"burstup",
+      dare:"Cuéntaselo a alguien en voz alta, aunque te dé un poco de vergüenza. Se merece decirse."},
+    {cat:"celebrar", name:"Medalla Invisible-um", incant:"Me la gané. Punto.",
+      effect:"Hace que el orgullo por algo bien hecho dure más de cinco minutos.",
+      ing:"Contárselo a alguien, aunque sea una sola persona.",
+      gest:"Un toque en el propio pecho, sin drama, solo constatando el hecho.", gpath:"press",
+      dare:"Guárdate este logro un rato para ti sola. No hace falta que todos lo sepan para que valga."},
+    {cat:"celebrar", name:"Pócima Fiesta de Una Persona", incant:"Fiesta declarada. Aunque sea sola.",
+      effect:"Un festejo exprés de tres ingredientes para cuando algo te sale bien y no hay nadie cerca para celebrarlo.",
+      ing:"Reúne: tu snack favorito, la canción más ridícula que tengas, y dos minutos de baile sin vergüenza.",
+      gest:"Girar la varita en espiral, como si estuvieras dando una vuelta bailando.", gpath:"twirl",
+      dare:"Haz un mini festejo random cuando algo te salga bien. No hace falta público."},
+
+    {cat:"naturaleza", name:"Selfie con la Luna", incant:"Luna, sonríe. Ya te vi.",
+      effect:"No cambia nada en el mundo. Pero mirar algo tan grande y tan lejos pone las cosas chiquitas en perspectiva, al menos un rato.",
+      ing:"Una noche despejada, o casi, y el teléfono guardado cinco minutos.",
+      gest:"Levantar la varita hacia el cielo, despacio, apuntando a la luna.", gpath:"moonpoint",
+      dare:"Sal esta noche a buscar la luna. Cinco minutos, sin el teléfono en la mano."},
+    {cat:"naturaleza", name:"Ramo Silvestre Exprés", incant:"Flora, ven conmigo.",
+      effect:"Obliga a caminar más despacio y mirar hacia abajo un rato, que a veces es justo lo que hace falta.",
+      ing:"Una bolsa pequeña, los bolsillos, o solo las manos.",
+      gest:"Un barrido suave y curvo con la varita, cerca del suelo, como juntando algo.", gpath:"sweep",
+      dare:"Recolecta tres flores (o piedritas, u hojas) en tu próxima caminata. Guárdalas donde las veas seguido."},
+    {cat:"naturaleza", name:"Modo Árbol Activado", incant:"Raíces, agárrenme fuerte.",
+      effect:"Cuando todo se siente demasiado rápido, esto ayuda a sentir el suelo otra vez. Literal.",
+      ing:"Pasto, arena o tierra bajo los pies. Zapatos opcionales.",
+      gest:"Apoyar la punta de la varita en el suelo, sin moverla, contando hasta cinco.", gpath:"root",
+      dare:"Párate descalza en el pasto un minuto. Va a sentirse raro. Funciona igual."},
+    {cat:"naturaleza", name:"Piedra con Superpoderes-um", incant:"Guárdame esto. Ahora es mágica.",
+      effect:"Convierte una piedra cualquiera en un recordatorio de bolsillo. La piedra no hace nada — el gesto de elegirla sí.",
+      ing:"Una piedra que te guste, encontrada, no comprada.",
+      gest:"Cerrar la mano alrededor de la varita, como guardando algo valioso.", gpath:"pocket",
+      dare:"La próxima vez que encuentres una piedra que te guste, quédatela. Es oficialmente mágica ahora."},
+    {cat:"naturaleza", name:"Receta Anti-Encierro", incant:"Puerta, ábrete. Vamos afuera.",
+      effect:"Una receta de tres pasos para cuando llevas mucho tiempo encerrada y no tienes ganas de salir, pero deberías.",
+      ing:"Reúne: los zapatos puestos, la puerta abierta, y diez minutos sin excusas.",
+      gest:"Trazar un rectángulo (la puerta) y una flecha saliendo de él hacia afuera.", gpath:"dooropen",
+      dare:"Sal afuera diez minutos, sin razón ni destino. Volver adentro después es totalmente válido."},
+
+    {cat:"valor", name:"Sofi Invencible al Cubo", incant:"Soy Sofi. Con eso alcanza.",
+      effect:"El único hechizo que no necesita nada más para funcionar. No hay ingrediente que le falte ni gesto que lo mejore.",
+      ing:"Nada. Ya está completo.",
+      gest:"Ninguno. Ya lo tienes resuelto.", gpath:"none",
+      dare:"Ninguna. Este hechizo ya viene completo, como tú."}
+  ];
+
+  /* ---------------- mood picker ---------------- */
+
+  const moodPicker = document.getElementById("moodPicker");
+  moodPicker.innerHTML = CATEGORIES.map(c=>{
+    return '<button class="mood-chip" type="button" data-cat="'+c.id+'">'
+      + '<svg class="mood-chip-icon" viewBox="0 0 40 40" aria-hidden="true">'+ICONS[c.id]+'</svg>'
+      + c.chip
+      + '</button>';
+  }).join("");
+
+  let selectedCat = null;
+  moodPicker.addEventListener("click", function(e){
+    const btn = e.target.closest(".mood-chip");
+    if(!btn) return;
+    const cat = btn.dataset.cat;
+    selectedCat = (selectedCat===cat) ? null : cat;
+    document.querySelectorAll(".mood-chip").forEach(c=>c.classList.toggle("active", c.dataset.cat===selectedCat));
+    castSpell();
+    if(spellCard.scrollIntoView){ spellCard.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"center"}); }
+  });
+
+  /* ---------------- casting ---------------- */
+
+  const spellCard = document.getElementById("spellCard");
+  const castHint = document.getElementById("castHint");
+  const wandBtn = document.getElementById("wandBtn");
+
+  function catName(id){ const c = CATEGORIES.find(c=>c.id===id); return c ? c.name : ""; }
+  function catChip(id){ const c = CATEGORIES.find(c=>c.id===id); return c ? c.chip : ""; }
+
+  function renderSparkles(){
+    let html = "";
+    const n = 7;
+    for(let i=0;i<n;i++){
+      const angle = (360/n)*i;
+      const dist = 46 + (i%3)*10;
+      const x = 50 + Math.cos(angle*Math.PI/180)*dist;
+      const y = 50 + Math.sin(angle*Math.PI/180)*dist*0.6;
+      html += '<svg class="sparkle" style="left:'+x+'%;top:'+y+'%;animation-delay:'+(i*0.05)+'s" viewBox="0 0 40 40" aria-hidden="true">'+starPoly(20,20,10,4,4)+'</svg>';
+    }
+    return html;
+  }
+
+  function castSpell(){
+    const pool = selectedCat ? SPELLS.filter(s=>s.cat===selectedCat) : SPELLS;
+    const spell = pool[Math.floor(Math.random()*pool.length)];
+    spellCard.innerHTML =
+      renderSparkles()
+      + '<span class="spell-cat">'+catName(spell.cat)+'</span>'
+      + '<svg class="spell-icon" viewBox="0 0 40 40" aria-hidden="true">'+ICONS[spell.cat]+'</svg>'
+      + '<h4 class="spell-name">'+spell.name+'</h4>'
+      + '<p class="spell-incantation">&ldquo;'+spell.incant+'&rdquo;</p>'
+      + '<p class="spell-effect">'+spell.effect+'</p>'
+      + '<div class="gesture-practice">'
+      + '<svg class="gesture-icon" viewBox="0 0 40 40" aria-hidden="true">'+GESTURE_ICONS[spell.gpath]+'</svg>'
+      + '<div><p class="gesture-caption">Movimiento de varita</p><p class="gesture-desc">'+spell.gest+'</p></div>'
+      + '</div>'
+      + '<dl class="spell-meta">'
+      + '<div><dt>Ingredientes</dt><dd>'+spell.ing+'</dd></div>'
+      + '<div><dt>Travesura</dt><dd>'+spell.dare+'</dd></div>'
+      + '</dl>';
+    spellCard.hidden = false;
+    castHint.textContent = selectedCat
+      ? "Filtrando por “"+catChip(selectedCat)+"”. ¿Otro? Agita de nuevo."
+      : "¿Otro? Vuelve a agitar la varita cuando quieras.";
+  }
+
+  wandBtn.addEventListener("click", castSpell);
+
+  /* ---------------- full grimoire index ---------------- */
+
+  const indexList = document.getElementById("indexList");
+  indexList.innerHTML = CATEGORIES.map(cat=>{
+    const spellsInCat = SPELLS.filter(s=>s.cat===cat.id);
+    const cards = spellsInCat.map(s=>{
+      return '<details class="spell-entry">'
+        + '<summary><span class="entry-name">'+s.name+'</span><span class="entry-incantation">&ldquo;'+s.incant+'&rdquo;</span></summary>'
+        + '<div class="entry-body">'
+        + '<p>'+s.effect+'</p>'
+        + '<p><strong>Ingredientes</strong>'+s.ing+'</p>'
+        + '<div class="entry-gesto">'
+        + '<svg class="gesture-icon" viewBox="0 0 40 40" aria-hidden="true">'+GESTURE_ICONS[s.gpath]+'</svg>'
+        + '<p><strong>Gesto</strong>'+s.gest+'</p>'
+        + '</div>'
+        + '<p><strong>Travesura</strong>'+s.dare+'</p>'
+        + '</div>'
+        + '</details>';
+    }).join("");
+    return '<div class="index-cat">'
+      + '<div class="index-cat-head"><svg class="index-cat-icon" viewBox="0 0 40 40" aria-hidden="true">'+ICONS[cat.id]+'</svg><h4>'+cat.name+'</h4></div>'
+      + '<div class="index-cards">'+cards+'</div>'
+      + '</div>';
+  }).join("");
+
+})();
+</script>
