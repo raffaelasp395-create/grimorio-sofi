@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grimorio de Sofi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&display=swap">
 <style>
@@ -243,6 +248,143 @@
   .entry-gesto .gesture-icon{width:38px; height:38px;}
   .entry-gesto p{margin:0;}
 
+  /* ---------- código secreto (alfabeto de runas original) ---------- */
+  .journal-card{
+    position:relative;
+    background:
+      radial-gradient(circle, var(--line) 1px, transparent 1.4px) 0 0/16px 16px,
+      var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:32px clamp(18px,5vw,34px) 26px;
+    box-shadow:var(--shadow);
+    transform:rotate(-.4deg);
+  }
+  .washi-tape{
+    position:absolute;
+    top:-14px;
+    left:50%;
+    transform:translateX(-50%) rotate(-2deg);
+    width:130px;
+    height:26px;
+    background:repeating-linear-gradient(45deg,
+      color-mix(in srgb, var(--rose) 55%, transparent),
+      color-mix(in srgb, var(--rose) 55%, transparent) 6px,
+      color-mix(in srgb, var(--brass) 45%, transparent) 6px,
+      color-mix(in srgb, var(--brass) 45%, transparent) 12px);
+    opacity:.6;
+    border-radius:2px;
+    box-shadow:0 3px 6px -2px rgba(0,0,0,.25);
+  }
+  .cipher-head{text-align:center; display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .cipher-head h3{font-size:22px;}
+  .cipher-head p{margin:0; color:var(--ink-dim); font-size:15px; max-width:480px;}
+  .cipher-translator{display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:20px;}
+  .cipher-input{
+    width:100%; max-width:340px;
+    font-family:'Lora', serif;
+    font-size:16px;
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink);
+  }
+  .cipher-input:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .cipher-output{
+    min-height:48px;
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:8px;
+  }
+  .cipher-output .rune-icon{width:28px; height:28px; color:var(--accent);}
+  .rune-gap{width:14px; flex:0 0 auto;}
+  .rune-grid{
+    margin-top:26px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(60px,1fr));
+    gap:10px;
+  }
+  .rune-cell{
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:8px 4px;
+    border-radius:10px;
+    background:var(--surface-2);
+    border:1px dashed var(--line);
+  }
+  .rune-cell .rune-icon{width:26px; height:26px; color:var(--brass);}
+  .rune-cell span{font-family:'Cinzel Decorative', serif; font-size:10.5px; letter-spacing:.04em; color:var(--ink-dim);}
+
+  .journal-card.alt{transform:rotate(.4deg);}
+
+  /* ---------- deseos (mini vision board) ---------- */
+  .wishes-head{text-align:center; display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .wishes-head h3{font-size:22px;}
+  .wishes-head p{margin:0; color:var(--ink-dim); font-size:15px; max-width:480px;}
+  .wishes-grid{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+    gap:14px;
+  }
+  .wish-tile{
+    background:var(--surface);
+    border:1px dashed var(--line);
+    border-radius:14px;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+  }
+  .wish-icon{width:30px; height:30px; color:var(--rose); flex:0 0 auto;}
+  .wish-label{font-family:'Cinzel Decorative', serif; font-size:11px; letter-spacing:.03em; color:var(--brass); margin:0;}
+  .wish-input{
+    width:100%;
+    border:none;
+    border-bottom:1px dashed var(--line);
+    background:transparent;
+    font-family:'Caveat', cursive;
+    font-size:18px;
+    color:var(--ink);
+    text-align:center;
+    padding:4px 2px;
+  }
+  .wish-input:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .wish-input::placeholder{color:var(--ink-dim); opacity:.6; font-family:'Lora', serif; font-size:12.5px;}
+  .wishes-hint{margin:14px 0 0; text-align:center; color:var(--ink-dim); font-size:13px; font-style:italic;}
+
+  /* ---------- fases de la luna ---------- */
+  .moon-head{text-align:center; display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .moon-head h3{font-size:22px;}
+  .moon-head p{margin:0; color:var(--ink-dim); font-size:15px; max-width:480px;}
+  .moon-grid{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;
+  }
+  .moon-tile{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+  }
+  .moon-icon{width:36px; height:36px; color:var(--brass); flex:0 0 auto;}
+  .moon-icon.flip-x{transform:scaleX(-1);}
+  .moon-name{font-family:'Cinzel Decorative', serif; font-size:13px; color:var(--ink);}
+  .moon-tile p{margin:0; font-size:13.5px; color:var(--ink-dim);}
+
   .sparkle{
     position:absolute;
     width:10px; height:10px;
@@ -308,11 +450,11 @@
     *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
   }
 </style>
-
+</head>
+<body>
 <div class="page">
 
   <header class="hero">
-    <p class="dedication">Para mi princesa, Sofi</p>
     <h1>Grimorio de Sofi</h1>
   </header>
 
@@ -341,13 +483,53 @@
     <div class="index-list" id="indexList"></div>
   </section>
 
+  <div class="divider"><span class="diamond"></span></div>
+
+  <section class="cipher-section">
+    <div class="journal-card">
+      <div class="washi-tape"></div>
+      <div class="cipher-head">
+        <h3>El Código Secreto de Sofi</h3>
+        <p>Un alfabeto inventado, solo tuyo. Escribe algo abajo y mira cómo se transforma en símbolos.</p>
+      </div>
+      <div class="cipher-translator">
+        <input type="text" class="cipher-input" id="cipherInput" maxlength="40" placeholder="Escribe tu nombre..." autocomplete="off">
+        <div class="cipher-output" id="cipherOutput"></div>
+      </div>
+      <div class="rune-grid" id="runeGrid"></div>
+    </div>
+  </section>
+
+  <div class="divider"><span class="diamond"></span></div>
+
+  <section class="wishes-section">
+    <div class="journal-card alt">
+      <div class="washi-tape"></div>
+      <div class="wishes-head">
+        <h3>Mis Deseos Mágicos</h3>
+        <p>Un rincón solo tuyo. Escribe lo que quieras en cada casilla — queda guardado aquí, como un diario secreto.</p>
+      </div>
+      <div class="wishes-grid" id="wishesGrid"></div>
+      <p class="wishes-hint">Se guarda solo en este navegador y en este dispositivo.</p>
+    </div>
+  </section>
+
+  <div class="divider"><span class="diamond"></span></div>
+
+  <section class="moon-section">
+    <div class="moon-head">
+      <h3>Las Fases de la Luna</h3>
+      <p>Para cuando quieras mirar el cielo y saber qué te está diciendo.</p>
+    </div>
+    <div class="moon-grid" id="moonGrid"></div>
+  </section>
+
   <footer class="signature">
     <p>Hecho con mucha magia (y cero varitas reales) para la sobrina más increíble que conozco.</p>
     <span class="sign-off">— Tía Raffy y Tío Luis 🪄</span>
   </footer>
 
 </div>
-
 <script>
 (function(){
   "use strict";
@@ -522,6 +704,149 @@
       + ghead("38,20 32,15 32,25")
       + trail("M24,20 L33,20",1.4)
   };
+
+  /* ---------------- código secreto: alfabeto de runas original ---------------- */
+  /* Tallo + ramas, como funcionan los alfabetos rúnicos en general (una idea
+     milenaria y de dominio público) — pero estas 26 combinaciones concretas
+     se generan aquí mismo, desde cero, para este grimorio. No es ningún
+     alfabeto existente ni de ninguna saga. */
+
+  const RUNE_SLOTS_Y = [12, 18, 24, 30];
+  function buildRuneCombos(){
+    const combos = [];
+    for(let mask=1; mask<16; mask++){
+      const activeSlots = [];
+      for(let i=0;i<4;i++){ if(mask & (1<<i)) activeSlots.push(i); }
+      const k = activeSlots.length;
+      for(let dirBits=0; dirBits<(1<<k); dirBits++){
+        combos.push({activeSlots:activeSlots, dirBits:dirBits});
+      }
+    }
+    // de menos ramas a más ramas, para que el alfabeto se vea parejo
+    combos.sort(function(a,b){ return a.activeSlots.length - b.activeSlots.length; });
+    return combos;
+  }
+  function runeGlyph(combo){
+    let svg = seg(20,7,20,33);
+    combo.activeSlots.forEach(function(slot,i){
+      const y = RUNE_SLOTS_Y[slot];
+      const right = !((combo.dirBits >> i) & 1);
+      svg += right ? seg(20,y,29,y-5) : seg(20,y,11,y-5);
+    });
+    return svg;
+  }
+  const RUNE_COMBOS = buildRuneCombos();
+  const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const RUNE_ALPHABET = {};
+  ALPHABET.split("").forEach(function(letter,i){ RUNE_ALPHABET[letter] = runeGlyph(RUNE_COMBOS[i]); });
+
+  function stripAccents(s){
+    return s.normalize("NFD").replace(/[̀-ͯ]/g,"");
+  }
+
+  const runeGrid = document.getElementById("runeGrid");
+  if(runeGrid){
+    runeGrid.innerHTML = ALPHABET.split("").map(function(letter){
+      return '<div class="rune-cell"><svg class="rune-icon" viewBox="0 0 40 40" aria-hidden="true">'+RUNE_ALPHABET[letter]+'</svg><span>'+letter+'</span></div>';
+    }).join("");
+  }
+
+  const cipherInput = document.getElementById("cipherInput");
+  const cipherOutput = document.getElementById("cipherOutput");
+  function renderCipher(){
+    if(!cipherInput || !cipherOutput) return;
+    const raw = stripAccents(cipherInput.value.toUpperCase());
+    let html = "";
+    for(let i=0;i<raw.length;i++){
+      const ch = raw[i];
+      if(ch===" "){ html += '<span class="rune-gap"></span>'; continue; }
+      const glyph = RUNE_ALPHABET[ch];
+      if(!glyph) continue;
+      html += '<svg class="rune-icon" viewBox="0 0 40 40" aria-hidden="true">'+glyph+'</svg>';
+    }
+    cipherOutput.innerHTML = html;
+  }
+  if(cipherInput){
+    cipherInput.addEventListener("input", renderCipher);
+    renderCipher();
+  }
+
+  /* ---------------- mis deseos mágicos (mini vision board) ---------------- */
+  /* Los íconos reutilizan formas ya definidas arriba (ICONS / GESTURE_ICONS)
+     para mantener un mismo lenguaje visual en todo el grimorio. */
+
+  const WISHES_KEY = "grimorio-sofi-deseos-v1";
+  function loadWishes(){
+    try{
+      const raw = window.localStorage.getItem(WISHES_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveWishes(data){
+    try{ window.localStorage.setItem(WISHES_KEY, JSON.stringify(data)); }
+    catch(e){ /* almacenamiento no disponible: no pasa nada, solo no se guarda */ }
+  }
+  function escAttr(s){
+    return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+  }
+
+  const WISHES = [
+    {id:"viaje", label:"Un viaje soñado", icon:GESTURE_ICONS.dooropen, placeholder:"¿A dónde te gustaría ir?"},
+    {id:"amistad", label:"Una nueva amistad", icon:ICONS.reir, placeholder:"¿Con quién te gustaría conectar?"},
+    {id:"valentia", label:"Un momento de valentía", icon:ICONS.valor, placeholder:"¿Qué te gustaría animarte a hacer?"},
+    {id:"rincon", label:"Mi rincón perfecto", icon:GESTURE_ICONS.cushion, placeholder:"¿Cómo sería tu lugar ideal?"},
+    {id:"companero", label:"Un amigo peludo", icon:GESTURE_ICONS.sheep, placeholder:"¿Qué mascota te gustaría tener?"},
+    {id:"calma", label:"Mente tranquila", icon:ICONS.dormir, placeholder:"¿Qué te ayuda a sentirte en paz?"},
+    {id:"recuerdo", label:"Un recuerdo para atesorar", icon:GESTURE_ICONS.snapshot, placeholder:"¿Qué momento quieres recordar siempre?"},
+    {id:"logro", label:"Algo que quiero lograr", icon:GESTURE_ICONS.burstup, placeholder:"¿Qué te gustaría conseguir?"},
+    {id:"aprender", label:"Algo nuevo que aprender", icon:ICONS.examen, placeholder:"¿Qué habilidad quieres aprender?"}
+  ];
+
+  const wishesGrid = document.getElementById("wishesGrid");
+  if(wishesGrid){
+    const savedWishes = loadWishes();
+    wishesGrid.innerHTML = WISHES.map(function(w){
+      const val = savedWishes[w.id] ? escAttr(savedWishes[w.id]) : "";
+      return '<div class="wish-tile">'
+        + '<svg class="wish-icon" viewBox="0 0 40 40" aria-hidden="true">'+w.icon+'</svg>'
+        + '<p class="wish-label">'+w.label+'</p>'
+        + '<input class="wish-input" type="text" maxlength="60" data-wish="'+w.id+'" placeholder="'+escAttr(w.placeholder)+'" value="'+val+'">'
+        + '</div>';
+    }).join("");
+    wishesGrid.addEventListener("input", function(e){
+      const inputEl = e.target.closest(".wish-input");
+      if(!inputEl) return;
+      const data = loadWishes();
+      data[inputEl.dataset.wish] = inputEl.value;
+      saveWishes(data);
+    });
+  }
+
+  /* ---------------- fases de la luna ---------------- */
+
+  const MOON_ICONS = {
+    nueva: gring(9,2),
+    creciente: CRESCENT,
+    llena: dot(20,20,10,true),
+    menguante: CRESCENT
+  };
+  const MOON_PHASES = [
+    {id:"nueva", name:"Luna Nueva", text:"Para empezar algo desde cero. Buen momento para pedir un deseo nuevo."},
+    {id:"creciente", name:"Luna Creciente", text:"Para seguir avanzando en algo que ya empezaste."},
+    {id:"llena", name:"Luna Llena", text:"Para celebrar y notar todo lo que ya lograste."},
+    {id:"menguante", name:"Luna Menguante", text:"Para soltar lo que ya no te hace bien."}
+  ];
+  const moonGrid = document.getElementById("moonGrid");
+  if(moonGrid){
+    moonGrid.innerHTML = MOON_PHASES.map(function(m){
+      const flipClass = m.id==="menguante" ? " flip-x" : "";
+      return '<div class="moon-tile">'
+        + '<svg class="moon-icon'+flipClass+'" viewBox="0 0 40 40" aria-hidden="true">'+MOON_ICONS[m.id]+'</svg>'
+        + '<p class="moon-name">'+m.name+'</p>'
+        + '<p>'+m.text+'</p>'
+        + '</div>';
+    }).join("");
+  }
 
   /* ---------------- content: categories & spells ---------------- */
   /* Todo original, inventado para Sofi — nada de esto es de ningún libro. */
@@ -811,3 +1136,5 @@
 
 })();
 </script>
+</body>
+</html>
