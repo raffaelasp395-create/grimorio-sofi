@@ -65,7 +65,10 @@
     pointer-events:none;
     z-index:0;
     background-image: radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 45%),
-                       radial-gradient(circle at 85% 92%, color-mix(in srgb, var(--brass) 10%, transparent), transparent 45%);
+                       radial-gradient(circle at 85% 92%, color-mix(in srgb, var(--brass) 10%, transparent), transparent 45%),
+                       radial-gradient(circle, var(--line) 0.7px, transparent 1.1px);
+    background-size: auto, auto, 24px 24px;
+    opacity:.9;
   }
   h1,h2,h3,.eyebrow,.spell-name,.wand-label,.cat-label{font-family:'Cinzel Decorative', 'Cinzel', serif;}
   h1,h2,h3{text-wrap:balance; margin:0; font-weight:700;}
@@ -101,6 +104,13 @@
     margin:0;
   }
   h1{font-size:clamp(32px,7vw,50px); color:var(--ink); letter-spacing:.01em;}
+  .hero h1{display:flex; align-items:center; justify-content:center; gap:14px;}
+  .hero h1::before,.hero h1::after{content:""; height:1px; width:clamp(26px,7vw,54px); flex:0 0 auto;}
+  .hero h1::before{background:linear-gradient(90deg, transparent, var(--brass));}
+  .hero h1::after{background:linear-gradient(270deg, transparent, var(--brass));}
+
+  .deco-heading{display:inline-flex; align-items:center; gap:10px;}
+  .deco-heading::before,.deco-heading::after{content:""; width:5px; height:5px; background:var(--brass); opacity:.75; transform:rotate(45deg); flex:0 0 auto;}
 
   /* ---------- cast stage ---------- */
   .cast-stage{
@@ -158,6 +168,7 @@
     border-radius:999px;
     background:var(--accent);
     color:var(--surface);
+    border:1px solid color-mix(in srgb, var(--brass) 55%, transparent);
     box-shadow:var(--shadow);
     transition:transform .2s ease, background .2s ease;
   }
@@ -191,6 +202,12 @@
     border:1px solid var(--line);
     border-radius:14px;
     pointer-events:none;
+    background:
+      radial-gradient(circle at 5px 5px, var(--brass) 0 1.6px, transparent 1.9px),
+      radial-gradient(circle at calc(100% - 5px) 5px, var(--brass) 0 1.6px, transparent 1.9px),
+      radial-gradient(circle at 5px calc(100% - 5px), var(--brass) 0 1.6px, transparent 1.9px),
+      radial-gradient(circle at calc(100% - 5px) calc(100% - 5px), var(--brass) 0 1.6px, transparent 1.9px);
+    opacity:.7;
   }
   .spell-cat{
     font-family:'Cinzel Decorative', serif;
@@ -259,6 +276,19 @@
     padding:32px clamp(18px,5vw,34px) 26px;
     box-shadow:var(--shadow);
     transform:rotate(-.4deg);
+  }
+  .journal-card::after{
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 5px 5px, var(--brass) 0 1.6px, transparent 1.9px),
+      radial-gradient(circle at calc(100% - 5px) 5px, var(--brass) 0 1.6px, transparent 1.9px),
+      radial-gradient(circle at 5px calc(100% - 5px), var(--brass) 0 1.6px, transparent 1.9px),
+      radial-gradient(circle at calc(100% - 5px) calc(100% - 5px), var(--brass) 0 1.6px, transparent 1.9px);
+    opacity:.7;
   }
   .washi-tape{
     position:absolute;
@@ -332,6 +362,7 @@
     gap:14px;
   }
   .wish-tile{
+    position:relative;
     background:var(--surface);
     border:1px dashed var(--line);
     border-radius:14px;
@@ -341,6 +372,16 @@
     align-items:center;
     gap:8px;
     text-align:center;
+  }
+  .wish-tile::after,.moon-tile::after{
+    content:"";
+    position:absolute; inset:3px;
+    border-radius:10px;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 4px 4px, var(--brass) 0 1.2px, transparent 1.5px),
+      radial-gradient(circle at calc(100% - 4px) calc(100% - 4px), var(--brass) 0 1.2px, transparent 1.5px);
+    opacity:.5;
   }
   .wish-icon{width:30px; height:30px; color:var(--rose); flex:0 0 auto;}
   .wish-label{font-family:'Cinzel Decorative', serif; font-size:11px; letter-spacing:.03em; color:var(--brass); margin:0;}
@@ -370,6 +411,7 @@
     gap:14px;
   }
   .moon-tile{
+    position:relative;
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:14px;
@@ -404,10 +446,21 @@
   .index-cat-head h4{font-size:16px; letter-spacing:.02em;}
   .index-cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;}
   .spell-entry{
+    position:relative;
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:12px;
     overflow:hidden;
+  }
+  .spell-entry::after{
+    content:"";
+    position:absolute; inset:4px;
+    border-radius:9px;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 4px 4px, var(--brass) 0 1.3px, transparent 1.6px),
+      radial-gradient(circle at calc(100% - 4px) 4px, var(--brass) 0 1.3px, transparent 1.6px);
+    opacity:.5;
   }
   .spell-entry summary{
     list-style:none;
@@ -460,7 +513,7 @@
 
   <section class="cast-stage">
     <div class="mood-head">
-      <h3>¿Cómo te sientes hoy?</h3>
+      <h3 class="deco-heading">¿Cómo te sientes hoy?</h3>
     </div>
     <div class="mood-picker" id="moodPicker"></div>
     <div class="wand-wrap">
@@ -477,7 +530,7 @@
 
   <section class="grimoire-index">
     <div class="index-head">
-      <h3>El grimorio completo</h3>
+      <h3 class="deco-heading">El grimorio completo</h3>
       <p>Todos los hechizos, por si quieres leerlos todos de una sola vez.</p>
     </div>
     <div class="index-list" id="indexList"></div>
@@ -489,7 +542,7 @@
     <div class="journal-card">
       <div class="washi-tape"></div>
       <div class="cipher-head">
-        <h3>El Código Secreto de Sofi</h3>
+        <h3 class="deco-heading">El Código Secreto de Sofi</h3>
         <p>Un alfabeto inventado, solo tuyo. Escribe algo abajo y mira cómo se transforma en símbolos.</p>
       </div>
       <div class="cipher-translator">
@@ -506,7 +559,7 @@
     <div class="journal-card alt">
       <div class="washi-tape"></div>
       <div class="wishes-head">
-        <h3>Mis Deseos Mágicos</h3>
+        <h3 class="deco-heading">Mis Deseos Mágicos</h3>
         <p>Un rincón solo tuyo. Escribe lo que quieras en cada casilla — queda guardado aquí, como un diario secreto.</p>
       </div>
       <div class="wishes-grid" id="wishesGrid"></div>
@@ -518,7 +571,7 @@
 
   <section class="moon-section">
     <div class="moon-head">
-      <h3>Las Fases de la Luna</h3>
+      <h3 class="deco-heading">Las Fases de la Luna</h3>
       <p>Para cuando quieras mirar el cielo y saber qué te está diciendo.</p>
     </div>
     <div class="moon-grid" id="moonGrid"></div>
